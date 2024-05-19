@@ -11,8 +11,16 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from environ import Env 
-env=Env()
+import environ 
+
+# Initialize environment variables
+env = environ.Env(
+    # Set casting, default value
+    DEBUG=(bool, False)
+)
+
+# Reading .env file
+environ.Env.read_env()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,7 +36,7 @@ SECRET_KEY =  'django-insecure-728k0bs%91o$^sp%aa_ji@2fmtwpdk7r1na#*$%l2+%)7tnpo
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['polls.local', '.polls.local']
+ALLOWED_HOSTS = ['polls.local', '.polls.local','127.0.0.1']
 
 # Application definition
 
@@ -52,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'tenants.middlewares.TenantMiddleware',
 ]
 
 ROOT_URLCONF = 'tenants.urls'
